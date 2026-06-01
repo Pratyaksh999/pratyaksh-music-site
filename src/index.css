@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 50%, #f3f4f6 100%);
+  color: #0A0A0A;
+}
+
+.dark body {
+  background: #0A0A0A !important;
+  color: #ffffff;
+}
+
+/* Make display font thinner */
+.font-display {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Dynamic Color Themes */
+:root {
+  --theme-primary: #FF3D00;
+  --theme-secondary: #FF6D00;
+  --theme-tertiary: #FFB300;
+}
+
+[data-color-theme="red"] {
+  --theme-primary: #FF3D00;
+  --theme-secondary: #FF6D00;
+  --theme-tertiary: #FFB300;
+}
+
+[data-color-theme="green"] {
+  --theme-primary: #059669;
+  --theme-secondary: #10B981;
+  --theme-tertiary: #34D399;
+}
+
+[data-color-theme="blue"] {
+  --theme-primary: #3B82F6;
+  --theme-secondary: #60A5FA;
+  --theme-tertiary: #93C5FD;
+}
+
+[data-color-theme="yellow"] {
+  --theme-primary: #F59E0B;
+  --theme-secondary: #FBBF24;
+  --theme-tertiary: #FCD34D;
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(90deg, var(--theme-secondary), var(--theme-primary), var(--theme-tertiary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .fire-glow {
+    text-shadow: 0 0 20px var(--theme-primary);
+  }
+
+  .section-padding {
+    @apply py-20 px-6 md:px-12 lg:px-20;
+  }
+
+  /* Social media hover colors */
+  .social-icon-spotify:hover {
+    background: #1DB954 !important;
+  }
+
+  .social-icon-apple:hover {
+    background: linear-gradient(135deg, #FA243C, #FC3C4C) !important;
+  }
+
+  .social-icon-instagram:hover {
+    background: linear-gradient(135deg, #833AB4, #E1306C, #F77737) !important;
+  }
+
+  .social-icon-youtube:hover {
+    background: #FF0000 !important;
+  }
+
+  /* Add depth to light mode */
+  html:not(.dark) body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle at 20% 50%, var(--theme-primary) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, var(--theme-secondary) 0%, transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Enhanced shadows for light mode */
+  html:not(.dark) .shadow-lg {
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  html:not(.dark) .shadow-xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Add borders to cards in light mode */
+  html:not(.dark) [class*="rounded-"] {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--theme-primary), var(--theme-secondary));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--theme-secondary), var(--theme-tertiary));
+}
+
+/* Smooth image loading */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Parallax smooth */
+.parallax-container {
+  perspective: 1000px;
+}

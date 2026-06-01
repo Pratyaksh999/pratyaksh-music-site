@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/music-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pratyaksh Bharadwaj | Official Music</title>
+    <meta name="description" content="Official music site of Pratyaksh Bharadwaj. Stream latest releases, explore the catalog, and stay updated." />
+
+    <!-- Theme Script - Must run before page renders -->
+    <script>
+      // Check localStorage and apply theme class immediately to prevent flash
+      const savedTheme = localStorage.getItem('theme');
+      const theme = savedTheme || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
