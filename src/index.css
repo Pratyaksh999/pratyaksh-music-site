@@ -11,6 +11,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -19,6 +21,20 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   background: linear-gradient(180deg, #f9fafb 0%, #ffffff 50%, #f3f4f6 100%);
   color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  img, video, iframe {
+    will-change: auto;
+  }
 }
 
 .dark body {

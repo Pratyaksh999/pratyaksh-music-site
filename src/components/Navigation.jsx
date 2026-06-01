@@ -271,14 +271,14 @@ const Navigation = ({ scrollY, onSearchOpen, searchQuery, onSearchChange, editMo
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-6 space-y-4"
+            className="md:hidden py-6 space-y-4 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md rounded-b-2xl shadow-lg"
           >
             {dynamicNavLinks.map((link) => (
               link.isRoute ? (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="block text-lg font-medium hover:text-theme-secondary transition-colors"
+                  className="block text-lg font-medium hover:text-theme-secondary transition-colors px-4 py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
@@ -287,13 +287,55 @@ const Navigation = ({ scrollY, onSearchOpen, searchQuery, onSearchChange, editMo
                 <a
                   key={link.name}
                   href={link.href}
-                  className="block text-lg font-medium hover:text-theme-secondary transition-colors"
+                  className="block text-lg font-medium hover:text-theme-secondary transition-colors px-4 py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
                 </a>
               )
             ))}
+
+            {/* Mobile Auth Buttons */}
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 px-4 space-y-3">
+              {user ? (
+                <>
+                  {isAdmin && (
+                    <button
+                      onClick={() => {
+                        setEditMode(!editMode);
+                        setIsMenuOpen(false);
+                      }}
+                      className={`w-full px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
+                        editMode
+                          ? 'bg-gradient-to-r from-theme-primary to-theme-secondary text-white'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                      }`}
+                    >
+                      {editMode ? '✓ Editing' : '✏️ Edit Mode'}
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full px-4 py-3 bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition-all"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    setShowLoginModal(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full px-4 py-3 bg-gradient-to-r from-theme-primary to-theme-secondary text-white font-semibold rounded-xl"
+                >
+                  🔐 Login
+                </button>
+              )}
+            </div>
           </motion.div>
         )}
       </div>

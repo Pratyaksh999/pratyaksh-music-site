@@ -7,12 +7,20 @@ import VideoMontageBackground from './VideoMontageBackground';
 const Hero = () => {
   const { scrollY } = useScroll();
   const { isDark, colors } = useTheme();
+  const [isMobile, setIsMobile] = React.useState(false);
 
-  // Parallax effects - elements move at different speeds
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, 400]);
-  const textY = useTransform(scrollY, [0, 1000], [0, 200]);
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Parallax effects - elements move at different speeds (disabled on mobile for performance)
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, isMobile ? 0 : 400]);
+  const textY = useTransform(scrollY, [0, 1000], [0, isMobile ? 0 : 200]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const scale = useTransform(scrollY, [0, 400], [1, 0.8]);
+  const scale = useTransform(scrollY, [0, 400], [1, isMobile ? 1 : 0.8]);
 
   // Individual letter fall apart animations
   const firstName = "PRATYAKSH";
@@ -44,6 +52,16 @@ const Hero = () => {
   ], []);
 
   const getLetterAnimation = (index, isFirstName) => {
+    // Disable letter animations on mobile for performance
+    if (isMobile) {
+      return {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        opacity: useTransform(scrollY, [0, 400], [1, 0]),
+      };
+    }
+
     const anim = isFirstName ? firstNameAnimations[index] : lastNameAnimations[index];
     return {
       x: useTransform(scrollY, [0, 2500], [0, anim.x]),
@@ -63,28 +81,30 @@ const Hero = () => {
         className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-transparent dark:from-transparent dark:via-black/30 dark:to-transparent pointer-events-none"
         style={{ y: backgroundY }}
       >
-        {/* Floating particles */}
-        <div className="absolute inset-0 opacity-30">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-theme-secondary rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.2, 0.8, 0.2],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
+        {/* Floating particles - disabled on mobile for performance */}
+        {!isMobile && (
+          <div className="absolute inset-0 opacity-30">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-theme-secondary rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0.2, 0.8, 0.2],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </div>
+        )}
       </motion.div>
 
       {/* Content */}
