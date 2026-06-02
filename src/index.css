@@ -27,9 +27,14 @@ body {
 
 /* Mobile performance optimizations */
 @media (max-width: 768px) {
-  * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Lighter animations on mobile */
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
   }
 
   img, video, iframe {
