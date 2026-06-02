@@ -19,7 +19,7 @@ const InteractiveAlbumCard = ({ release, index, inView, scrollProgress }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }} // Always animate to visible, remove inView dependency
       transition={{ duration: 0.6, delay: index * 0.1 }}
       style={scrollProgress ? { y: yOffset, rotate, scale } : {}}
       className="group perspective-1000 w-full"
