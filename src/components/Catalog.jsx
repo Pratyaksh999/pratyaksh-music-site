@@ -57,14 +57,14 @@ const Catalog = ({ editMode = false }) => {
             FULL DISCOGRAPHY
           </p>
           <motion.h2
-            className="font-display font-black text-5xl md:text-7xl"
+            className="font-display font-black text-4xl md:text-5xl lg:text-7xl"
             style={{ scale: titleScale }}
           >
             The <span className="text-gradient fire-glow">Catalog</span>
           </motion.h2>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Add New Release Card */}
           {editMode && isAdmin(user) && (
             <div className="relative">

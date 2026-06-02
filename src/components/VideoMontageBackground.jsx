@@ -5,21 +5,10 @@ import { useVideos } from '../hooks/useFirebaseData';
 const VideoMontageBackground = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const { videos: allVideos, loading } = useVideos(true); // Only fetch homepage videos
 
   // Use homepage videos for montage
   const montageVideos = allVideos;
-
-  // Detect mobile device
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     if (montageVideos.length === 0) return;
@@ -85,26 +74,15 @@ const VideoMontageBackground = () => {
           transition={{ duration: 0.8 }}
           className="absolute inset-0"
         >
-          {isMobile ? (
-            /* Mobile: Static image background for better performance */
-            <img
-              src={currentVideo.thumbnail?.replace('hqdefault', 'maxresdefault') || `https://img.youtube.com/vi/${currentVideo.id}/maxresdefault.jpg`}
-              alt={currentVideo.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="eager"
-            />
-          ) : (
-            /* Desktop: YouTube video embed */
-            <iframe
-              src={embedUrl}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] pointer-events-none"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={currentVideo.title}
-              loading="lazy"
-            />
-          )}
+          {/* YouTube video embed - works on all devices */}
+          <iframe
+            src={embedUrl}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[300%] md:h-[300%] pointer-events-none"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={currentVideo.title}
+          />
 
           {/* Gradient Overlays for readability */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
