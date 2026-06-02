@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 import ShareButton from './ShareButton';
 
-const InteractiveAlbumCard = ({ release, index, inView, scrollProgress }) => {
+const InteractiveAlbumCard = ({ release, index, inView = true, scrollProgress }) => { // Default inView to true
   // Create parallax effects based on scroll - disable on mobile
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
