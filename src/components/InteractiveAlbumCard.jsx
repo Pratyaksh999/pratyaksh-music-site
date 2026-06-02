@@ -3,16 +3,18 @@ import { motion, useTransform } from 'framer-motion';
 import ShareButton from './ShareButton';
 
 const InteractiveAlbumCard = ({ release, index, inView, scrollProgress }) => {
-  // Create parallax effects based on scroll
-  const yOffset = scrollProgress ? useTransform(
+  // Create parallax effects based on scroll - disable on mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  const yOffset = (scrollProgress && !isMobile) ? useTransform(
     scrollProgress,
     [0, 0.5, 1],
     // Alternate direction based on index for visual variety
     index % 2 === 0 ? [100, 0, -50] : [50, 0, -100]
   ) : 0;
 
-  const rotate = scrollProgress ? useTransform(scrollProgress, [0, 0.5, 1], [2, 0, -2]) : 0;
-  const scale = scrollProgress ? useTransform(scrollProgress, [0, 0.3, 0.6, 1], [0.95, 1, 1, 0.95]) : 1;
+  const rotate = (scrollProgress && !isMobile) ? useTransform(scrollProgress, [0, 0.5, 1], [2, 0, -2]) : 0;
+  const scale = (scrollProgress && !isMobile) ? useTransform(scrollProgress, [0, 0.3, 0.6, 1], [0.95, 1, 1, 0.95]) : 1;
 
   return (
     <motion.div

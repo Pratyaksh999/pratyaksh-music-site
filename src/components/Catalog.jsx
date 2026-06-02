@@ -39,6 +39,8 @@ const Catalog = ({ editMode = false }) => {
 
   const releases = firebaseReleases.length > 0 ? firebaseReleases : hardcodedReleases;
 
+  console.log('Catalog - releases count:', releases.length, 'loading:', loading, 'inView:', inView);
+
   if (loading) {
     return (
       <section id="catalog" className="section-padding bg-gradient-to-b from-gray-100 via-gray-50 to-white dark:from-dark-bg dark:to-dark-card">
