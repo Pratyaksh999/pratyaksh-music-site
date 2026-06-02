@@ -53,6 +53,14 @@ const Catalog = ({ editMode = false }) => {
 
   return (
     <section id="catalog" className="section-padding bg-gradient-to-b from-gray-100 via-gray-50 to-white dark:from-dark-bg dark:to-dark-card border-t border-gray-200 dark:border-theme-primary/10" ref={ref}>
+      {/* Mobile Debug Info - Remove after testing */}
+      <div className="md:hidden fixed top-20 left-4 bg-red-500 text-white p-4 rounded-lg z-50 text-xs">
+        <div>Releases: {releases.length}</div>
+        <div>Loading: {loading ? 'Yes' : 'No'}</div>
+        <div>InView: {inView ? 'Yes' : 'No'}</div>
+        <div>Firebase: {firebaseReleases.length}</div>
+      </div>
+
       <div className="max-w-7xl mx-auto">
         <ScrollReveal direction="left" className="mb-16">
           <p className="text-theme-secondary font-semibold tracking-widest text-sm mb-3">
